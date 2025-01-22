@@ -1,0 +1,124 @@
+{
+  "processInfo": {
+    "processKey": "process_1736758432226", // 保证全局唯一，可用时间戳生成
+    "name": "请假流程",
+    "description": "员工请假审批流程",
+    "icon": "leave.png",
+    "color": "#000000",
+    "initiatorUsers": "62,67", // 可发起流程的用户
+    "initiatorGroups": "4,5", // 可发起流程的组
+    "ccUsersSelf": "62,67", // 发起人自选的抄送人（不存在用户可自选抄送人的节点时可不传）
+    "cancelTime": 30, // 可撤销时间
+    "sameAutoApprove": true, // 同一审批人在流程中重复出现时自动审批
+    "isSystem": true // 区分自定义流程还是系统流程
+  },
+  "processNode": {
+    "nodeId": "start111", // 节点id，字母开头随意配，确保当前流程唯一，下同
+    "nodeName": "发起节点",
+    "nodeType": "startEvent",
+    "form_start111": [ // 表单字段名格式为form_{nodeId}
+      {
+        "id": "radio_112233", // 表单控件id，字母开头随意配，确保当前流程唯一，下同
+        "name": "请假类型",
+        "type": "radio",
+        "required": true,
+        "options": ["年假", "病假", "事假"]
+      },
+      {
+        "id": "number_334455",
+        "name": "请假天数",
+        "type": "number",
+        "required": true,
+        "hint": "请输入"
+      },
+      {
+        "id": "text_778899",
+        "name": "请假原因",
+        "type": "text",
+        "required": true,
+        "hint": "请输入"
+      }
+    ],
+    "nextNode": {
+      "nodeId": "bbb111",
+      "nodeName": "条件分支",
+      "nodeType": "exclusiveGateway",
+      "branchNodes": [
+        {
+          "nodeId": "ddd111",
+          "nodeName": "部门经理审批",
+          "nodeType": "userTask",
+          "condition": "${initiator == 73 || number_334455 > 3}", // initiator发起人id，number_334455表单控件id
+          "candidateGroups": [1,4,5], // 指定岗位
+          "sameDepartment": true, // 仅限提交人的所属部门（仅指定岗位时需要传）
+          "form_ddd111": [
+            {
+              "id": "text0001",
+              "name": "审批意见",
+              "type": "text",
+              "required": true,
+              "hint": "请输入"
+            },
+            {
+              "id": "image0002",
+              "name": "审批图片",
+              "type": "image",
+              "required": true
+            }
+          ],
+          "nextNode": {
+            "nodeId": "fff222",
+            "nodeName": "人事抄送-分支1-用户自选",
+            "nodeType": "userTask",
+            "allowSelf": true // 允许用户自选
+          }
+        },
+        {
+          "nodeId": "ddd222",
+          "nodeName": "直接主管审批",
+          "nodeType": "userTask",
+          "condition": "${radio_112233 == 1 && text_778899 == \"请假理由\"}",
+          "candidateUsers": [62,67,73], // 指定用户
+          "form_ddd222": [
+            {
+              "id": "text0001",
+              "name": "审批意见",
+              "type": "text",
+              "required": true,
+              "hint": "请输入"
+            },
+            {
+              "id": "image0002",
+              "name": "审批图片",
+              "type": "image",
+              "required": true
+            }
+          ],
+          "nextNode": {
+            "nodeId": "fff333",
+            "nodeName": "人事抄送-分支1-模板指定",
+            "nodeType": "userTask",
+            "ccUsers": "62,67,73" // 指定用户（同时出现时，优先级高于允许用户自选）
+          }
+        }
+      ],
+      "mergeNode": {
+        "nodeId": "eee111",
+        "nodeName": "条件合并",
+        "nodeType": "exclusiveGateway",
+        "nextNode": {
+          "nodeId": "fff111",
+          "nodeName": "人事抄送-总",
+          "nodeType": "userTask",
+          "allowSelf": true,
+          "ccUsers": "62,67,73",
+          "nextNode": {
+            "nodeId": "ggg111",
+            "nodeName": "结束",
+            "nodeType": "endEvent"
+          }
+        }
+      }
+    }
+  }
+}
