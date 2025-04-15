@@ -7,7 +7,7 @@
     "color": "#000000",
     "initiatorUsers": "62,67", // 可发起流程的用户
     "initiatorGroups": "4,5", // 可发起流程的组
-    "ccUsersSelf": "62,67", // 发起人自选的抄送人（不存在用户可自选抄送人的节点时可不传）
+    "ccUsersSelf": "62,67", // 发起人自选的抄送人（如果所有节点都不允许用户可自选抄送人，可不传）
     "cancelTime": 30, // 可撤销时间
     "sameAutoApprove": true, // 同一审批人在流程中重复出现时自动审批
     "isSystem": true // 区分自定义流程还是系统流程
