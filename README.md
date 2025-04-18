@@ -6,7 +6,7 @@
 ## 项目预览
 
 ![工作流系统界面](src/script/demo.png)
-图源网络[Workflow-Vue3](https://github.com/lzgabel/activiti-bpmn-converter)，无法直接对接，实现功能一致
+图源网络[Workflow-Vue3](https://github.com/StavinLi/Workflow-Vue3)，无法直接对接，实现功能一致
 
 ## 功能特性
 
