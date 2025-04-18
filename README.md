@@ -6,7 +6,7 @@
 ## 项目预览
 
 ![工作流系统界面](src/script/demo.png)
-图源网络，效果一致
+图源网络[Workflow-Vue3](https://github.com/lzgabel/activiti-bpmn-converter)，无法直接对接，实现功能一致
 
 ## 功能特性
 
@@ -35,3 +35,6 @@
 
 创建名为 `workflow` 的数据库，执行 `src/script/init.sql`。  
 其他必要的数据表系统将自动创建。
+
+## 参考开源项目
+BPMN节点构建：[activiti-bpmn-converter](https://github.com/lzgabel/activiti-bpmn-converter)
